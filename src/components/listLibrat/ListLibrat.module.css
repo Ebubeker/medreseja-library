@@ -1,0 +1,130 @@
+.bookItem {
+    border: gray solid .5px;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.itemInfo {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.itemInfo p, .itemSituation p {
+    margin: 0;
+    margin-right: 20px;
+    font-weight: 600;
+}
+
+.itemSituation {
+    display: flex;
+    align-items: center;
+}
+
+.loadMore {
+    background-color: rgb(172, 172, 172);
+    padding: 20px 40px;
+    border-radius: 20px;
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    cursor: pointer;
+}
+
+.loadMore p {
+    margin: 0;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.popUp {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.438);
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+}
+
+.popupThing {
+    background-color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.button {
+    background-color: #ff2929;
+    text-align: center;
+    width: 150px;
+    padding: 5px 5px;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #bd2222;
+
+}
+
+.title {
+    font-weight: bold;
+    font-size: 30px;
+    text-transform: capitalize;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    border: .5px solid #555;
+    outline: none;
+    margin: 15px 0;
+}
+
+.label {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.select {
+    border: none;
+    border-radius: 10px;
+    border: .5px solid #555;
+    padding: 5px 20px;
+    outline: none;
+    display: block;
+    margin: 5px 0;
+}
+
+.btn {
+    background-color: #2962ff;
+    text-align: center;
+    width: 250px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #224cbd;
+
+}
