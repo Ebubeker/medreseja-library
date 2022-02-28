@@ -3,11 +3,12 @@ import { useState } from "react";
 import axios from "axios";
 
 const graphAPI = process.env.GRAPHCMS_ENDPOINT;
+const proxy = "https://library-backend.vercel.app";
 
 export const krijoLiber = (bookObj) => {
   // const [info, setInfo] = useState()
   axios
-    .post("http://localhost:4000/createLiber", {
+    .post(`${proxy}/createLiber`, {
       bookInfo: bookObj,
     })
     .then((result) => true)
@@ -16,7 +17,7 @@ export const krijoLiber = (bookObj) => {
 
 export const GetLibrat = () => {
   return axios
-    .get("http://localhost:4000/getLibrat")
+    .get(`${proxy}/getLibrat`)
     .then((res) => {
       return res.data;
     })
@@ -25,7 +26,7 @@ export const GetLibrat = () => {
 
 export const getCupons = () => {
   return axios
-    .get("http://localhost:4000/listCupon")
+    .get(`${proxy}/listCupon`)
     .then((res) => {
       // console.log(res);
       return res.data;
@@ -34,17 +35,17 @@ export const getCupons = () => {
 };
 
 export const deleteLiber = (bookId) => {
-  axios.delete(`http://localhost:4000/deleteLiber/${bookId}`);
+  axios.delete(`${proxy}/deleteLiber/${bookId}`);
 };
 
 export const deleteCupon = (isbn) => {
-  axios.delete(`http://localhost:4000/deleteCupon/${isbn}`);
+  axios.delete(`${proxy}/deleteCupon/${isbn}`);
 };
 
 export const krijoKupon = (cuponObj) => {
   // const [info, setInfo] = useState()
   axios
-    .post("http://localhost:4000/createCupon", {
+    .post(`${proxy}/createCupon`, {
       cuponInfo: cuponObj,
     })
     .then((result) => true)
@@ -52,14 +53,14 @@ export const krijoKupon = (cuponObj) => {
 };
 
 export const decreaseStock = (bookId, newStock) => {
-  axios.post("http://localhost:4000/decreaseStock", {
+  axios.post(`${proxy}/decreaseStock`, {
     isbn: bookId,
     newStock: newStock,
   });
 };
 
 export const increaseStock = (bookId, newStock) => {
-  axios.post("http://localhost:4000/increaseStock", {
+  axios.post(`${proxy}/increaseStock`, {
     isbn: bookId,
     newStock: newStock,
   });
@@ -67,7 +68,7 @@ export const increaseStock = (bookId, newStock) => {
 
 export const updateBook = (obj) => {
   console.log(obj);
-  axios.post("http://localhost:4000/updateBook", {
+  axios.post(`${proxy}/updateBook`, {
     book: obj,
   });
 };
