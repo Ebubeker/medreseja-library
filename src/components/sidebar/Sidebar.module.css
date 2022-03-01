@@ -43,3 +43,10 @@
     padding: 3px 60px;
     transition: all .3s ease-in-out;
 }
+
+@media (max-width: 1000px) {
+    .link {
+        font-weight: bold;
+        font-size: 12px;
+    }
+}

@@ -15,10 +15,42 @@
     overflow-y: scroll;
     height: 100%;
     background-color: #eef5f9;
-    font-family:"Nunito", sans-serif;
+    font-family: "Nunito", sans-serif;
 }
 
 .container {
     width: 70%;
     margin: 0 auto;
+}
+
+.bar {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background-color: rgb(92, 92, 219);
+    border-radius: 60px;
+    padding: 13px 14px;
+    border: 2px solid black;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    display: none;
+}
+
+.bar:hover {
+    background-color: rgb(150, 150, 248);
+}
+
+@media (max-width: 1000px) {
+    .leftSide {
+        display: none;
+        position: absolute;
+    }
+
+    .rightSide {
+        width: 100%;
+    }
+
+    .bar {
+        display: block;
+    }
 }
