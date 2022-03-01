@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 
 const graphAPI = process.env.GRAPHCMS_ENDPOINT;
-const proxy = "https://library-backend.vercel.app";
+const proxy = "https://backend-libraria.herokuapp.com";
 
 export const krijoLiber = (bookObj) => {
   // const [info, setInfo] = useState()
