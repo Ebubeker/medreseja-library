@@ -48,7 +48,6 @@ const ListLibrat = () => {
               <option value="fjalor">Fjalor</option>
               <option value="histori">Histori</option>
             </select>
-  
             <label className={styles.label} htmlFor="listo">
               Listo sipas
             </label>

@@ -46,3 +46,13 @@
     background-color: #224cbd;
 
 }
+
+@media (max-width: 1000px) {
+    .input {
+        width: calc(100% - 20px);
+    }
+
+    .btn {
+        width: 200px;
+    }
+}

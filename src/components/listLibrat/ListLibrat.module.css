@@ -128,3 +128,42 @@
     background-color: #224cbd;
 
 }
+
+@media (max-width: 1000px) {
+    .input {
+        width: calc(100% - 20px);
+    }
+
+    .btn {
+        width: 200px;
+    }
+
+    .bookItem {
+        display: block;
+    }
+
+    .itemInfo {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .itemInfo p {
+        margin-bottom: 2px;
+    }
+
+    .itemSituation {
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+
+    .itemSituation p {
+        margin-bottom: 2px;
+    }
+
+    .loadMore {
+        width: 190px;
+    }
+}

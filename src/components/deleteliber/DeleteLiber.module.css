@@ -31,3 +31,13 @@
     outline: none;
     margin: 15px 0;
 }
+
+@media (max-width: 1000px) {
+    .input {
+        width: calc(100% - 20px);
+    }
+
+    .btn{
+        width: 200px;
+    }
+}

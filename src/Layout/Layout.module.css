@@ -40,6 +40,12 @@
     background-color: rgb(150, 150, 248);
 }
 
+@media (min-width: 1000px) {
+    .leftSide {
+        display: block;
+    }
+}
+
 @media (max-width: 1000px) {
     .leftSide {
         display: none;

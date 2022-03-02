@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import Sidebar from '../components/sidebar/Sidebar';
 import styles from './Layout.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,6 +6,15 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Layout = ({children}) => {
   const sideBarrr = useRef(null)
+  const [width, setWidth] = useState(0);
+
+  window.addEventListener('resize', ()=>{
+    setWidth(window.innerWidth);
+  })
+
+  if(width > 1000){
+    sideBarrr.current.style.display = "block";
+  }
 
   const openSidebar = () => {
     console.log(sideBarrr.current.style.display)
