@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styles from './ListKupon.module.css';
-import { getCupons, deleteCupon, GetLibrat, increaseStock } from '../../server/server';
+import { getCupons, deleteCupon, GetLibrat, increaseStock, searchKupon } from '../../server/server';
 
 const ListKupon = () => {
   const [tickets, setTickets] = useState([]);
   const [limit, setLimit] = useState(7);
   const [librat, setLibrat] = useState([]);
-  
-  useEffect(() => {
+  const searchinput = useRef(null);
+
+  useEffect(()=>{
     getCupons().then((res)=> {
       setTickets(res.result);
     });
@@ -15,6 +16,9 @@ const ListKupon = () => {
     GetLibrat().then((res)=> {
       setLibrat(res.result)
     });
+  }, [])
+  useEffect(() => {
+    
   }, [tickets])
   
 
@@ -35,6 +39,19 @@ const ListKupon = () => {
     deleteCupon(id);
     increaseStock(isbn, currentStock);
   };
+
+  const kerko = () => {
+    const toSearch = searchinput.current.value;
+    if(toSearch === ""){
+      getCupons().then((res)=> {
+        setTickets(res.result)
+      })
+    }else{
+      searchKupon(toSearch).then((res)=> {
+        setTickets(res.resu);
+      })
+    }
+  }
 
   if(tickets === []){
     return(
@@ -58,6 +75,7 @@ const ListKupon = () => {
               className={styles.input}
               type="text"
               placeholder="Search for a book"
+              ref={searchinput}
             />
             <label className={styles.label} htmlFor="kategoria">
               Kategoria
@@ -77,7 +95,7 @@ const ListKupon = () => {
               <option value="stoku">Stoku</option>
             </select>
             <br />
-            <div className={styles.btn}>Kerko</div>
+            <div onClick={kerko} className={styles.btn}>Kerko</div>
           </div>
           {/* book list */}
           <div>

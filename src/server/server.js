@@ -82,3 +82,13 @@ export const searchBook = (name) => {
     })
     .catch((err) => false);
 };
+
+export const searchKupon = (name) => {
+  return axios
+    .get(`${proxy}/searchKuponByName/${name}`)
+    .then((res) => {
+      // console.log(res.data.resu);
+      return res.data;
+    })
+    .catch((err) => false);
+};
