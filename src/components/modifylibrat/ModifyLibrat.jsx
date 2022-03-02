@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useRef} from 'react';
 import styles from './ModifyLibrat.module.css';
-import { GetLibrat, updateBook } from '../../server/server';
+import { GetLibrat, updateBook, searchBook } from '../../server/server';
 
 const ModifyLibrat = () => {
   const [limit, setLimit] = useState(7);
   const [librat, setLibrat] = useState([]);
   const [oneLiber, setOneLiber] = useState({});
+  const searchinput = useRef(null);
 
   const [popupStat, setPopupStat] = useState(false);
   const box = useRef(null);
@@ -18,11 +19,14 @@ const ModifyLibrat = () => {
   const autori = useRef(null);
   const stocku = useRef(null);
 
-
   useEffect(() => {
     GetLibrat().then((res)=> {
       setLibrat(res.result)
     })
+  }, [])
+  
+
+  useEffect(() => {
   }, [popupStat]);
   
   const moreList = () => {
@@ -43,6 +47,19 @@ const ModifyLibrat = () => {
     }
   };
 
+  const kerko = () => {
+    const toSearch = searchinput.current.value;
+    console.log(toSearch)
+    if(toSearch === ""){
+      GetLibrat().then((res)=> {
+        setLibrat(res.result)
+      })
+    }else{
+      searchBook(toSearch).then((res)=> {
+        setLibrat(res.resu);
+      })
+    }
+  }
   const handleEditSubmit = () => {
     const liberObj = {
       title: titulli.current.value,
@@ -77,6 +94,7 @@ const ModifyLibrat = () => {
               className={styles.input}
               type="text"
               placeholder="Search for a book"
+              ref={searchinput}
             />
             <label className={styles.label} htmlFor="kategoria">
               Kategoria
@@ -96,7 +114,7 @@ const ModifyLibrat = () => {
               <option value="stoku">Stoku</option>
             </select>
             <br />
-            <div className={styles.btn}>Kerko</div>
+            <div onClick={kerko} className={styles.btn}>Kerko</div>
           </div>
           {/* book list */}
           <div>

@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styles from './ListLibrat.module.css';
-import { GetLibrat } from '../../server/server';
+import { GetLibrat, searchBook } from '../../server/server';
 
 const ListLibrat = () => {  
-  const graphAPI = process.env.GRAPHCMS_ENDPOINT;
-
   const [limit, setLimit] = useState(7);
-  const [librat, setLibrat] = useState([])
+  const [librat, setLibrat] = useState([]);
+  const searchinput = useRef(null);
 
   useEffect(() => {
     GetLibrat().then((res)=> {
@@ -19,6 +18,19 @@ const ListLibrat = () => {
       setLimit(limit + 7);
     }
   };
+
+  const kerko = () => {
+    const toSearch = searchinput.current.value;
+    if(toSearch === ""){
+      GetLibrat().then((res)=> {
+        setLibrat(res.result)
+      })
+    }else{
+      searchBook(toSearch).then((res)=> {
+        setLibrat(res.resu);
+      })
+    }
+  }
 
   if(librat === []){
     return(
@@ -39,6 +51,7 @@ const ListLibrat = () => {
               className={styles.input}
               type="text"
               placeholder="Search for a book"
+              ref={searchinput}
             />
             <label className={styles.label} htmlFor="kategoria">
               Kategoria
@@ -57,7 +70,7 @@ const ListLibrat = () => {
               <option value="stoku">Stoku</option>
             </select>
             <br />
-            <div className={styles.btn}>Kerko</div>
+            <div onClick={kerko} className={styles.btn}>Kerko</div>
           </div>
           {/* book list */}
           <div>

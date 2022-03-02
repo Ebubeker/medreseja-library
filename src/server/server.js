@@ -68,8 +68,17 @@ export const increaseStock = (bookId, newStock) => {
 };
 
 export const updateBook = (obj) => {
-  console.log(obj);
   axios.post(`${proxy}/updateBook`, {
     book: obj,
   });
+};
+
+export const searchBook = (name) => {
+  return axios
+    .get(`${proxy}/searchByName/${name}`)
+    .then((res) => {
+      // console.log(res.data.resu);
+      return res.data;
+    })
+    .catch((err) => false);
 };
