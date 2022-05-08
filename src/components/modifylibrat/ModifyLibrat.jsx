@@ -1,12 +1,15 @@
 import React, {useState, useEffect, useRef} from 'react';
 import styles from './ModifyLibrat.module.css';
-import { GetLibrat, updateBook, searchBook } from '../../server/server';
+import { GetLibrat, updateBook, searchBook, searchBookSpecial } from '../../server/server';
 
 const ModifyLibrat = () => {
   const [limit, setLimit] = useState(7);
   const [librat, setLibrat] = useState([]);
   const [oneLiber, setOneLiber] = useState({});
+  const [categories, setCategories] = useState([])
   const searchinput = useRef(null);
+  const chosenCategory = useRef(null)
+  const chosenSort = useRef(null);
 
   const [popupStat, setPopupStat] = useState(false);
   const box = useRef(null);
@@ -20,8 +23,18 @@ const ModifyLibrat = () => {
   const stocku = useRef(null);
 
   useEffect(() => {
+    let kategorite = [];
+    let unique;
     GetLibrat().then((res)=> {
       setLibrat(res.result)
+      let librat = res.result;
+  
+      librat.forEach((liber)=>{
+        kategorite.push(liber.category)
+      })
+      unique = [...new Set(kategorite)];
+  
+      setCategories(unique);
     })
   }, [])
   
@@ -49,15 +62,23 @@ const ModifyLibrat = () => {
 
   const kerko = () => {
     const toSearch = searchinput.current.value;
-    console.log(toSearch)
-    if(toSearch === ""){
+    const catoption = chosenCategory.current.value;
+    const sortOption = chosenSort.current.value; 
+    if(toSearch === "" && catoption === "All" && sortOption === "normal"){
       GetLibrat().then((res)=> {
         setLibrat(res.result)
       })
     }else{
-      searchBook(toSearch).then((res)=> {
-        setLibrat(res.resu);
-      })
+      if(catoption === "All"){
+        searchBookSpecial(toSearch, sortOption).then((res)=>{
+          setLibrat(res.resu);
+
+        })
+      }else{
+        searchBook(toSearch, catoption, sortOption).then((res)=> {
+          setLibrat(res.resu);
+        })
+      }
     }
   }
   const handleEditSubmit = () => {
@@ -99,16 +120,17 @@ const ModifyLibrat = () => {
             <label className={styles.label} htmlFor="kategoria">
               Kategoria
             </label>
-            <select className={styles.select} name="kategoria" id="">
-              <option value="psikologji">Psikologji</option>
-              <option value="fjalor">Fjalor</option>
-              <option value="histori">Histori</option>
+            <select ref={chosenCategory} className={styles.select} name="kategoria" id="">
+              <option value="All">All</option>
+              {categories.map((uniq, i) => (
+                <option key={i} value={uniq}>{uniq}</option>
+              ))}
             </select>
   
             <label className={styles.label} htmlFor="listo">
               Listo sipas
             </label>
-            <select className={styles.select} name="listo" id="">
+            <select ref={chosenSort}className={styles.select} name="listo" id="">
               <option value="emri_A_Z">Emri A-Z</option>
               <option value="normal">Normal</option>
               <option value="stoku">Stoku</option>

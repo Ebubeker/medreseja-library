@@ -1,15 +1,28 @@
 import React, {useState, useEffect, useRef} from 'react';
 import styles from './ListLibrat.module.css';
-import { GetLibrat, searchBook } from '../../server/server';
+import { GetLibrat, searchBook, searchBookSpecial } from '../../server/server';
 
 const ListLibrat = () => {  
   const [limit, setLimit] = useState(7);
   const [librat, setLibrat] = useState([]);
+  const [categories, setCategories] = useState([])
   const searchinput = useRef(null);
+  const chosenCategory = useRef(null)
+  const chosenSort = useRef(null);
 
   useEffect(() => {
+    let kategorite = [];
+    let unique;
     GetLibrat().then((res)=> {
       setLibrat(res.result)
+      let librat = res.result;
+
+      librat.forEach((liber)=>{
+        kategorite.push(liber.category)
+      })
+      unique = [...new Set(kategorite)];
+
+      setCategories(unique);
     })
   }, []);
   
@@ -21,14 +34,23 @@ const ListLibrat = () => {
 
   const kerko = () => {
     const toSearch = searchinput.current.value;
-    if(toSearch === ""){
+    const catoption = chosenCategory.current.value;
+    const sortOption = chosenSort.current.value; 
+    if(toSearch === "" && catoption === "All" && sortOption === "normal"){
       GetLibrat().then((res)=> {
         setLibrat(res.result)
       })
     }else{
-      searchBook(toSearch).then((res)=> {
-        setLibrat(res.resu);
-      })
+      if(catoption === "All"){
+        searchBookSpecial(toSearch, sortOption).then((res)=>{
+          setLibrat(res.resu);
+
+        })
+      }else{
+        searchBook(toSearch, catoption, sortOption).then((res)=> {
+          setLibrat(res.resu);
+        })
+      }
     }
   }
 
@@ -45,7 +67,7 @@ const ListLibrat = () => {
           <link rel="icon" href="/favicon.ico" />
         </head>
         <div>
-          <p className={styles.title}>Lista e librave</p>
+          <p className={styles.title}>Lista e librave   (libra: {librat.length})</p>
           <div className={styles.searchBar}>
             <input
               className={styles.input}
@@ -56,17 +78,18 @@ const ListLibrat = () => {
             <label className={styles.label} htmlFor="kategoria">
               Kategoria
             </label>
-            <select className={styles.select} name="kategoria" id="">
-              <option value="psikologji">Psikologji</option>
-              <option value="fjalor">Fjalor</option>
-              <option value="histori">Histori</option>
+            <select ref={chosenCategory} className={styles.select} name="kategoria" id="">
+              <option value="All">All</option>
+              {categories.map((uniq, i) => (
+                <option key={i} value={uniq}>{uniq}</option>
+              ))}
             </select>
             <label className={styles.label} htmlFor="listo">
               Listo sipas
             </label>
-            <select className={styles.select} name="listo" id="">
-              <option value="emri_A_Z">Emri A-Z</option>
+            <select ref={chosenSort} className={styles.select} name="listo" id="">
               <option value="normal">Normal</option>
+              <option value="emri_A_Z">Emri A-Z</option>
               <option value="stoku">Stoku</option>
             </select>
             <br />

@@ -69,7 +69,7 @@ const ListKupon = () => {
           <link rel="icon" href="/favicon.ico" />
         </head>
         <div>
-          <p className={styles.title}>Lista e librave</p>
+          <p className={styles.title}>Lista e Kuponave</p>
           <div className={styles.searchBar}>
             <input
               className={styles.input}
@@ -77,23 +77,6 @@ const ListKupon = () => {
               placeholder="Search for a book"
               ref={searchinput}
             />
-            <label className={styles.label} htmlFor="kategoria">
-              Kategoria
-            </label>
-            <select className={styles.select} name="kategoria" id="">
-              <option value="psikologji">Psikologji</option>
-              <option value="fjalor">Fjalor</option>
-              <option value="histori">Histori</option>
-            </select>
-  
-            <label className={styles.label} htmlFor="listo">
-              Listo sipas
-            </label>
-            <select className={styles.select} name="listo" id="">
-              <option value="emri_A_Z">Emri A-Z</option>
-              <option value="normal">Normal</option>
-              <option value="stoku">Stoku</option>
-            </select>
             <br />
             <div onClick={kerko} className={styles.btn}>Kerko</div>
           </div>

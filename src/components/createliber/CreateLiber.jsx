@@ -1,20 +1,27 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './CreateLiber.module.css';
 import { krijoLiber } from '../../server/server';
 
 const CreateLiber = () => {
+
+  const [message, setMessage] = useState('');
+  const [messageColor, setMessageColor] = useState('');
 
   const autori = useRef(null);
   const bookId = useRef(null);
   const kategoria = useRef(null);
   const rafti = useRef(null);
   const rreshti = useRef(null);
-  const slug = useRef(null);
   const statusLibriOne = useRef(null);
   const stocku = useRef(null);
   const titulli = useRef(null);
 
   let statusLibri = true;
+
+  useEffect(() => {
+    
+  }, [message, messageColor])
+  
 
   const handleCommentSubmission = () => {
     if (statusLibriOne.current.value === "aktiv") {
@@ -23,29 +30,51 @@ const CreateLiber = () => {
       statusLibri = false;
     }
 
+    let lowercaseTitle = titulli.current.value.toLowerCase();
+    var newStr = lowercaseTitle.replace(/ /g, "-");
+    let lowercaseAuthor = autori.current.value.toLowerCase();
+    var anotherStr = lowercaseAuthor.replace(/ /g, "-");
+
+    let combinetslug = `${newStr}-${anotherStr}`;
+    console.log(combinetslug)
+
     const bookObj = {
       autori: autori.current.value,
       bookId: parseInt(bookId.current.value),
       kategoria: kategoria.current.value,
       rafti: rafti.current.value,
       rreshti: parseInt(rreshti.current.value),
-      slug: slug.current.value,
+      slug: combinetslug,
       statusLibri: statusLibri,
       stocku: parseInt(stocku.current.value),
       titulli: titulli.current.value,
     };
 
-    krijoLiber(bookObj);
+    krijoLiber(bookObj).then((result)=>{
+      console.log(result);
+      if(result.status){
+        setMessage(result.message);
+        setMessageColor('#30b337');
+      }else{
+        setMessage(result.message);
+        setMessageColor('#b33430');
+      }
+    });
 
     autori.current.value = "";
     bookId.current.value = "";
     kategoria.current.value = "";
     rafti.current.value = "";
     rreshti.current.value = "";
-    slug.current.value = "";
     statusLibriOne.current.value = "aktiv";
     stocku.current.value = "";
     titulli.current.value = "";
+
+    setTimeout(() => {
+        setMessage('');
+        setMessageColor('');
+    }, "3000")
+
   };
 
   return (
@@ -57,6 +86,7 @@ const CreateLiber = () => {
       </head>
       <div>
         <p className={styles.title}>Krijo nje liber</p>
+        <p style={{color: messageColor}}>{message}</p>
         <input
           ref={titulli}
           className={styles.input}
@@ -82,7 +112,6 @@ const CreateLiber = () => {
           type="text"
           placeholder="ID e librit"
         />
-        <input ref={slug} className={styles.input} type="text" placeholder="Slug" />
         <label className={styles.label} htmlFor="status">
           Statusi
         </label>
